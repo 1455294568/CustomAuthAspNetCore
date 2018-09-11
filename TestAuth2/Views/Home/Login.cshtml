@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>
+<input type="text" id="username" />
+<input type="password" id="passwd" />
+<input type="button" value="登陆" id="login" />
+
+@section scripts
+{
+<script>
+    $(function () {
+        $('#login').click(function () {
+            if ($('#username').val() == '') {
+                alert('请输入账号');
+                return;
+            }
+            if ($('#passwd').val() == '') {
+                alert('请输入密码');
+                return;
+            }
+            $.ajax({
+                url: '/home/login',
+                type: 'POST',
+                data: {
+                    username: $('#username').val(),
+                    passwd: $('#passwd').val()
+                },
+                success: function (message) {
+                    if (message == '1') {
+                        $(document).html("登陆成功... 正在跳转");
+                        window.location.href = "/";
+                    }
+                    else {
+                        alert(message);
+                    }
+                }
+            });
+        });
+    });
+</script>
+}

@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h2>Register</h2>
+<input type="text" id="username" />
+<input type="password" id="passwd" />
+<input type="button" value="注册" id="register" />
+
+@section scripts{ 
+    <script>
+        $(function () {
+            $('#register').click(function () {
+                if ($('#username').val() == '') {
+                    alert('请输入账号');
+                    return;
+                }
+                if ($('#passwd').val() == '') {
+                    alert('请输入密码');
+                    return;
+                }
+                $.ajax({
+                    url: '/home/register',
+                    type: 'POST',
+                    data: {
+                        username: $('#username').val(),
+                        passwd: $('#passwd').val()
+                    },
+                    success: function (message) {
+                        if (message == '1') {
+                            $(document).html("注册成功... 正在跳转");
+                            window.location.href = "/home/login";
+                        }
+                        else {
+                            alert(message);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}
