@@ -40,7 +40,9 @@ namespace TestAuth2.Controllers
                 var u = _dbcontext.Users.First(s => s.username == user.username);
                 if (u.passwd == user.passwd)
                 {
-                    var token = AesTool.Encrypt(Newtonsoft.Json.JsonConvert.SerializeObject(u));
+                    user.Id = u.Id;
+                    user.passwd = "******";
+                    var token = AesTool.Encrypt(Newtonsoft.Json.JsonConvert.SerializeObject(user));
                     CookieOptions options = new CookieOptions();
                     options.Expires = DateTime.Now.AddDays(30);
                     HttpContext.Session.SetString("Token", token);
