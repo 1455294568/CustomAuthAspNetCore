@@ -35,7 +35,7 @@ namespace TestAuth2.Tools
                 var identity = new ClaimsIdentity(claims, Scheme.Name);
                 var principal = new ClaimsPrincipal(identity);
                 var ticket = new AuthenticationTicket(principal, Scheme.Name);
-                var u = _dbcontext.Users.First(s => s.Id == info.Id);
+                var u = _dbcontext.Users.Find(info.Id);
                 if (u != null)
                 {
                     return Task.FromResult(AuthenticateResult.Success(ticket));
